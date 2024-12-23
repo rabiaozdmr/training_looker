@@ -1,5 +1,6 @@
 # The name of this view in Looker is "Users"
 view: users {
+  view_label: "Users Table"
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
   sql_table_name: `thelook_ecommerce.users` ;;
@@ -9,6 +10,7 @@ view: users {
   # You need to define a primary key in a view in order to join to other views.
 
   dimension: id {
+    label: "ID"
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
@@ -22,15 +24,32 @@ view: users {
     sql: ${TABLE}.age ;;
   }
 
+  dimension: age_tier {
+    type: tier
+    tiers: [18, 25, 35, 45, 55, 65, 75, 90]
+    style: relational
+    sql: CASE WHEN ${age} IS NOT NULL THEN ${age} ELSE NULL END;;
+  }
+
+  dimension: age_group {
+    type: bin
+    bins: [18, 25, 35, 45, 55, 65]
+    sql: ${TABLE}.age ;;
+  }
+
   dimension: city {
+    hidden: yes
     type: string
     sql: ${TABLE}.city ;;
   }
 
   dimension: city1 {
     type: string
+    label: "City Name"
+    description: "City's name in users table"
     sql: ${TABLE}.city ;;
   }
+
   dimension: country {
     type: string
     map_layer_name: countries
@@ -57,12 +76,18 @@ view: users {
 
   dimension: gender {
     type: string
-    sql: ${TABLE}.gender ;;
+      sql: ${TABLE}.gender IS NOT NULL;;
   }
+
 
   dimension: last_name {
     type: string
     sql: ${TABLE}.last_name ;;
+  }
+
+  dimension: full_name {
+    type: string
+    sql: ${first_name} || ' ' || ${last_name} ;;
   }
 
   dimension: latitude {
@@ -94,9 +119,24 @@ view: users {
     type: string
     sql: ${TABLE}.traffic_source ;;
   }
+
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: count_female_users {
+    type: count
+    filters: {
+      field: gender
+      value: "F"
+    }
+  }
+
+  measure: percentage_female_users {
+    type: number
+    value_format_name: percent_1
+    sql: ${count_female_users} / NULLIF(${count}, 0) ;;
   }
 
   # ----- Sets of fields for drilling ------

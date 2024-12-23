@@ -22,6 +22,26 @@ view: order_items {
     sql: ${TABLE}.created_at ;;
   }
 
+  dimension: days_since_signup {
+    type: number
+    sql: DATE_DIFF(${shipped_date}, ${created_date}, DAY);;
+  }
+
+  dimension: total_sale_bigger_1 {
+    type: yesno
+    sql: ${sale_price} >= 1 ;;
+  }
+
+  measure: total_more_than_1_usd {
+    type: sum
+    sql: ${sale_price} ;;
+    filters: {
+      field: total_sale_bigger_1
+      value: "Yes"
+    }
+  }
+
+
   dimension_group: delivered {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
@@ -76,6 +96,19 @@ view: order_items {
     # hidden: yes
     sql: ${TABLE}.user_id ;;
   }
+
+  measure: total_sale_price {
+    type: sum
+    value_format_name: usd
+    sql: ${TABLE}.sale_price ;;
+  }
+
+
+  measure: AVG_sale_price {
+    type: average
+    sql: ${TABLE}.sale_price ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
@@ -84,16 +117,16 @@ view: order_items {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	id,
-	users.last_name,
-	users.id,
-	users.first_name,
-	inventory_items.id,
-	inventory_items.product_name,
-	products.name,
-	products.id,
-	orders.order_id
-	]
+  id,
+  users.last_name,
+  users.id,
+  users.first_name,
+  inventory_items.id,
+  inventory_items.product_name,
+  products.name,
+  products.id,
+  orders.order_id
+  ]
   }
 
 }

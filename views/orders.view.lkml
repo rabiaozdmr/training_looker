@@ -38,7 +38,7 @@ view: orders {
 
   dimension: num_of_item {
     type: number
-    sql: ${TABLE}.num_of_item ;;
+    sql: ${TABLE}.num_of_item
   }
 
   dimension_group: returned {

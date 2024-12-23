@@ -66,6 +66,11 @@ view: inventory_items {
     sql: ${TABLE}.product_retail_price ;;
   }
 
+  dimension: profit {
+    type: number
+    sql: ${product_retail_price} - ${inventory_items.cost} ;;
+  }
+
   dimension: product_sku {
     type: string
     sql: ${TABLE}.product_sku ;;
