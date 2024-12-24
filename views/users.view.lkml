@@ -25,7 +25,7 @@ view: users {
     sql: ${TABLE}.age ;;
   }
 
-  dimension: age_tier {
+  dimension: age_tier1 {
     type: tier
     tiers: [18, 25, 35, 45, 55, 65, 75, 90]
     style: relational
@@ -121,10 +121,6 @@ view: users {
     sql: ${TABLE}.traffic_source ;;
   }
 
-  measure: user_id_list {
-    type: list
-    list_field:id
-  }
 
   measure: count {
     type: count

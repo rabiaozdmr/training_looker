@@ -32,6 +32,11 @@ view: order_items {
     sql: ${sale_price} >= 1 ;;
   }
 
+  measure: total_sale_bigger_1_list {
+    type: list
+    list_field:id
+  }
+
   measure: total_more_than_1_usd {
     type: sum
     sql: ${sale_price} ;;
