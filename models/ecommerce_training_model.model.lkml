@@ -116,3 +116,4 @@ explore: inventory_items {
 # Each joined view also needs to define a primary key.
 
 explore: distribution_centers {}
+explore: users {}
