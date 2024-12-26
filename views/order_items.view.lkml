@@ -21,7 +21,10 @@ view: order_items {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.created_at ;;
   }
-
+  dimension: date_week {
+    type: date
+    sql: ${TABLE}.created_week ;;
+  }
   dimension: days_since_signup {
     type: number
     sql: DATE_DIFF(${shipped_date}, ${created_date}, DAY);;
@@ -96,11 +99,25 @@ view: order_items {
     sql: ${TABLE}.status ;;
   }
 
+  parameter: partitioning_dimension {
+    type: string
+    allowed_value: {
+      label: "Date Week"
+      value: "date_week"
+    }
+    allowed_value: {
+      label: "status"
+      value: "status"
+    }
+  }
+
+
   dimension: user_id {
     type: number
     # hidden: yes
     sql: ${TABLE}.user_id ;;
   }
+
 
   measure: total_sale_price {
     type: sum
@@ -119,6 +136,32 @@ view: order_items {
     drill_fields: [detail*]
   }
 
+  measure: rank_by_count_of_purchase {
+    type: number
+    sql: |
+          ROW_NUMBER() OVER (
+            PARTITION BY
+            {% if partitioning_dimension._parameter_value %}
+              {% assign dimensions = partitioning_dimension._parameter_value | split: ',' %}
+              {% for dimension in dimensions %}
+                {% if dimension == 'date_week' %}
+                  ${date_week}
+                {% elsif dimension == 'status' %}
+                  ${status}
+                {% endif %}
+                {% if forloop.last == false %}, {% endif %}
+              {% endfor %}
+            {% else %}
+              NULL
+            {% endif %}
+            ORDER BY ${count_of_purchase} DESC
+          ) ;;
+  }
+
+  measure: count_of_purchase {
+    type: sum
+    sql: ${TABLE}.purchase_count ;;
+  }
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [

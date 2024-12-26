@@ -3,7 +3,7 @@ view: products {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
   sql_table_name: `thelook_ecommerce.products` ;;
-  drill_fields: [id]
+  drill_fields: [id,brand,category]
 
   # This primary key is the unique key for this table in the underlying database.
   # You need to define a primary key in a view in order to join to other views.
@@ -20,11 +20,23 @@ view: products {
   dimension: brand {
     type: string
     sql: ${TABLE}.brand ;;
+    drill_fields: [id,category]
+    link: {
+      label: "Get More Information"
+      url: "http://www.google.com/search?q={{ category }}"
+      icon_url: "http://google.com/favicon.ico"
+    }
+    link: {
+      label: "Mail office"
+      url: "mailto:{{value}}@elementrental.com"
+      icon_url: "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico"
+    }
   }
 
   dimension: category {
     type: string
     sql: ${TABLE}.category ;;
+    suggestions: ["Jeans","Dresses"]
   }
 
   dimension: cost {
@@ -46,6 +58,26 @@ view: products {
   dimension: name {
     type: string
     sql: ${TABLE}.name ;;
+
+    action: {
+      label: "Send customer a poke"
+      icon_url: "http://google.com/favicon.ico"
+      url: "https://example.com"
+
+      param: {
+        name: "id"
+        value: "{{value}}"
+      }
+
+      form_param: {
+        name: "message"
+        type: string
+        label: "Message"
+        description: "This is the message that you want to send to the customer"
+      }
+
+      }
+
   }
 
   dimension: retail_price {
@@ -57,22 +89,29 @@ view: products {
     type: string
     sql: ${TABLE}.sku ;;
   }
+
+  measure: sum_retail_price {
+    type: sum
+    sql: ${TABLE}.retail_price ;;
+  }
+
   measure: count {
     type: count
-    drill_fields: [detail*]
+    drill_fields: [id,department,distribution_center_id]
+   # drill_fields: [detail*]
   }
 
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	id,
-	name,
-	distribution_centers.name,
-	distribution_centers.id,
-	order_items1.count,
-	inventory_items.count,
-	order_items.count
-	]
+  id,
+  name,
+  distribution_centers.name,
+  distribution_centers.id,
+  order_items1.count,
+  inventory_items.count,
+  order_items.count
+  ]
   }
 
 }
