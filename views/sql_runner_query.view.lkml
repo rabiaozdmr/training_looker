@@ -14,6 +14,7 @@ view: sql_runner_query {
       ORDER BY
           3 DESC
       LIMIT 500 ;;
+      persist_for: "15 min"
   }
 
   measure: count {
@@ -39,8 +40,8 @@ view: sql_runner_query {
   set: detail {
     fields: [
         users_id,
-	orders_order_id,
-	orders_count
+  orders_order_id,
+  orders_count
     ]
   }
 }

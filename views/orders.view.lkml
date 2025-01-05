@@ -38,7 +38,7 @@ view: orders {
 
   dimension: num_of_item {
     type: number
-    sql: ${TABLE}.num_of_item
+    sql: ${TABLE}.num_of_item;;
   }
 
   dimension_group: returned {
@@ -56,6 +56,7 @@ view: orders {
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
+    drill_fields: [num_of_item]
   }
 
   dimension: user_id {
