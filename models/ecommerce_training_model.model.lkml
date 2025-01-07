@@ -107,6 +107,9 @@ explore: events {
   }
 }
 
+
+
+
 explore: inventory_items {
   join: products {
     type: left_outer
@@ -128,3 +131,17 @@ explore: inventory_items {
 explore: distribution_centers {}
 explore: users {}
 explore: user_details {}
+explore: sql_runner_query {}
+explore: magfi_ads_data {}
+
+test: order_id_is_unique {
+  explore_source: orders {
+    column: order_id {}
+    column: count {}
+    sorts: [orders.count: desc]
+    limit: 1
+  }
+  assert: order_id_is_unique {
+    expression: ${orders.count} = 1 ;;
+  }
+}

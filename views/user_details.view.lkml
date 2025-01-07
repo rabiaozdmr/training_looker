@@ -12,6 +12,7 @@ view: user_details {
           2
       ORDER BY
           3 DESC;;
+    sql_trigger_value: SELECT FORMAT_TIMESTAMP('%Y-%m-%d %H:%M', CURRENT_TIMESTAMP()) ;;
   }
 
 

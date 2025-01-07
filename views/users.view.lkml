@@ -96,6 +96,12 @@ view: users {
     sql: ${first_name} || ' - ' || ${last_name} ;;
   }
 
+dimension: location {
+  type: location
+  sql_latitude: ${TABLE}.latitude ;;
+  sql_longitude: ${TABLE}.longitude ;;
+  }
+
   dimension: latitude {
     type: number
     sql: ${TABLE}.latitude ;;

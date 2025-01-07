@@ -14,7 +14,6 @@ view: sql_runner_query {
       ORDER BY
           3 DESC
       LIMIT 500 ;;
-      persist_for: "15 min"
   }
 
   measure: count {
