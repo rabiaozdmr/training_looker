@@ -1,5 +1,5 @@
 view: magfi_ads_data {
-  sql_table_name: `rabia-sandbox-336410.thelook_ecommerce.magfi_ads_data` ;;
+  sql_table_name: `thelook_ecommerce.magfi_ads_data` ;;
   drill_fields: [id]
 
   dimension: id {
