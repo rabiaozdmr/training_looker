@@ -9,7 +9,7 @@ include: "/views/**/*.view.lkml"
 
 datagroup: thelook_ecommerce_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "5 hour"
+  max_cache_age: "5 hours"
 }
 
 persist_with: thelook_ecommerce_default_datagroup
