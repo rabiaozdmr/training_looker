@@ -12,8 +12,7 @@ view: sql_runner_query {
           1,
           2
       ORDER BY
-          3 DESC
-      LIMIT 500 ;;
+          3 DESC ;;
   }
 
   measure: count {

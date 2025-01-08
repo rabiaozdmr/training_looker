@@ -66,6 +66,8 @@ explore: order_items {
 
 
 explore: orders {
+  label: "Customer Orders"
+  description: "Explore customer orders and purchase details."
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;

@@ -87,6 +87,8 @@ view: users {
   }
 
   dimension: full_name {
+    label: "Customer Name"
+    description: "Customer details"
     type: string
     sql: ${first_name} || ' ' || ${last_name} ;;
   }
