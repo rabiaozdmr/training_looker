@@ -21,25 +21,7 @@ persist_with: thelook_ecommerce_default_datagroup
 
 # To see the Explore you’re building, navigate to the Explore menu and select an Explore under "Thelook Ecommerce"
 
-explore: order_items1 {
-  join: users {
-    type: left_outer
-    sql_on: ${order_items1.user_id} = ${users.id} ;;
-    relationship: many_to_one
-  }
 
-  join: products {
-    type: left_outer
-    sql_on: ${order_items1.product_id} = ${products.id} ;;
-    relationship: many_to_one
-  }
-
-  join: distribution_centers {
-    type: left_outer
-    sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
-    relationship: many_to_one
-  }
-}
 
 explore: order_items {
   join: users {
