@@ -97,7 +97,22 @@ explore: products {
     sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
     relationship: many_to_one
   }
+  join: order_items {
+    type: left_outer
+    sql_on: ${order_items.product_id} = ${products.id} ;;
+    relationship: many_to_one
+  }
+
 }
+
+
+explore: products_extended {
+  view_name: products
+  extends: [products]
+  fields: [ALL_FIELDS*]
+  sql_always_where: ${distribution_centers.name} = "Houston TX";;
+}
+
 
 explore: events {
   join: users {
@@ -133,6 +148,7 @@ explore: users {}
 explore: user_details {}
 explore: sql_runner_query {}
 explore: magfi_ads_data {}
+explore: accessories_products {}
 
 test: order_id_is_unique {
   explore_source: orders {

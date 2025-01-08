@@ -95,6 +95,10 @@ view: products {
     sql: ${TABLE}.retail_price ;;
   }
 
+  measure: total_cost {
+    type: sum
+    sql: ${TABLE}.cost ;;
+  }
   measure: count {
     type: count
     drill_fields: [id,department,distribution_center_id]

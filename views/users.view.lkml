@@ -77,7 +77,7 @@ view: users {
 
   dimension: gender {
     type: string
-      sql: ${TABLE}.gender IS NOT NULL;;
+      sql: ${TABLE}.gender;;
   }
 
 

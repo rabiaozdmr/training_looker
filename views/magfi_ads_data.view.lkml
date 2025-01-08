@@ -41,7 +41,7 @@ view: magfi_ads_data {
   }
   dimension_group: created {
     type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, time, date, week, month, quarter, year,month_name,day_of_week,week_of_year]
     sql: ${TABLE}.created_at ;;
   }
   dimension: ctr {
@@ -88,5 +88,25 @@ view: magfi_ads_data {
   measure: total_spending {
     type: sum
     sql: ${TABLE}.spending ;;
+  }
+  measure: sum_cpa {
+    type: sum
+    sql: ${TABLE}.cpa ;;
+  }
+  measure: sum_cpc {
+    type: sum
+    sql: ${TABLE}.cpc ;;
+  }
+  measure: sum_cpm {
+    type: sum
+    sql: ${TABLE}.cpm ;;
+  }
+  measure: sum_ctr {
+    type: sum
+    sql: ${TABLE}.ctr ;;
+  }
+  measure: sum_cvr {
+    type: sum
+    sql: ${TABLE}.cvr ;;
   }
 }
